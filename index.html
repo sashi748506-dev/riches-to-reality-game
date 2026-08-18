@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riches to Reality - Simulator</title>
+    <title>Rich to Poor - Simulator</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -13,7 +13,7 @@
             text-align: center; 
             margin: 0;
         }
-        h1 { color: #38bdf8; font-size: 22px; margin-bottom: 5px; }
+        h1 { color: #f43f5e; font-size: 22px; margin-bottom: 5px; }
         .card { 
             background: #1e293b; 
             padding: 15px; 
@@ -29,7 +29,7 @@
             font-size: 13px; 
             color: #f1f5f9; 
             margin-bottom: 15px; 
-            border-left: 4px solid #38bdf8;
+            border-left: 4px solid #f43f5e;
             text-align: left;
         }
         .btn-sector { 
@@ -51,8 +51,8 @@
 </head>
 <body>
 
-    <h1>Riches to Reality</h1>
-    <p style="font-size: 12px; color: #94a3b8;">Goal: Reach ₹10,00,00,000 Net Worth</p>
+    <h1>Rich to Poor</h1>
+    <p style="font-size: 12px; color: #94a3b8;">Survive the market & reach ₹10 Crore without going bankrupt!</p>
     
     <div class="ticker" id="newsTicker">
         📰 Market Loading...
@@ -67,7 +67,7 @@
         <button class="btn-sector" style="background: #f59e0b;" onclick="invest('ecommerce')">📦 E-Commerce Store (Medium Risk)</button>
         <button class="btn-sector" style="background: #ef4444;" onclick="invest('crypto')">📈 Crypto / Stocks (High Risk)</button>
         
-        <div class="log" id="actionLog">Select a sector to start building your wealth!</div>
+        <div class="log" id="actionLog">Select a sector to start your journey!</div>
     </div>
 
     <script>
@@ -90,10 +90,10 @@
             let message = "";
 
             if (type === 'content') {
-                // Stable, steady returns
                 let outcome = Math.random();
                 if (outcome > 0.3) {
-                    profitOrLoss = Math.floor(Math.random() * 5000) + 1000;
+                    profitOrLeft = Math.floor(Math.random() * 5000) + 1000;
+                    profitOrLoss = profitOrLeft;
                     message = `🎥 Your viral video brought steady revenue! Earned ₹${profitOrLoss}`;
                 } else {
                     profitOrLoss = -Math.floor(Math.random() * 1500);
@@ -101,7 +101,6 @@
                 }
             } 
             else if (type === 'ecommerce') {
-                // Medium risk/reward
                 let outcome = Math.random();
                 if (outcome > 0.45) {
                     profitOrLoss = Math.floor(Math.random() * 25000) + 5000;
@@ -112,7 +111,6 @@
                 }
             } 
             else if (type === 'crypto') {
-                // High risk/reward
                 let outcome = Math.random();
                 if (outcome > 0.6) {
                     profitOrLoss = Math.floor(Math.random() * 150000) + 20000;
@@ -124,21 +122,26 @@
             }
 
             balance += profitOrLoss;
-            if (balance < 0) balance = 0;
+            
+            if (balance <= 0) {
+                balance = 0;
+                document.getElementById("balance").innerText = "₹0";
+                document.getElementById("actionLog").innerText = "💸 BANKRUPT! You lost everything and became completely poor!";
+                alert("Game Over! You hit zero balance.");
+                return;
+            }
 
             document.getElementById("balance").innerText = "₹" + balance.toLocaleString();
             document.getElementById("actionLog").innerText = message;
 
-            // Check Win Condition
             if (balance >= target) {
-                alert("🏆 CONGRATULATIONS! You reached ₹10 Crore and became Ultra-Rich!");
+                alert("🏆 CONGRATULATIONS! You successfully beat the odds and became Ultra-Rich!");
                 document.getElementById("actionLog").innerText = "🏆 YOU WON THE GAME!";
             }
         }
 
-        // Update news ticker every 10 seconds automatically
         setInterval(generateSmartNews, 10000);
-        generateSmartNews(); // Initial call
+        generateSmartNews();
     </script>
 
 </body>
