@@ -9,88 +9,136 @@
             font-family: Arial, sans-serif; 
             background: #0f172a; 
             color: #f8fafc; 
-            padding: 20px; 
+            padding: 15px; 
             text-align: center; 
             margin: 0;
         }
-        h1 { color: #38bdf8; font-size: 24px; }
+        h1 { color: #38bdf8; font-size: 22px; margin-bottom: 5px; }
         .card { 
             background: #1e293b; 
-            padding: 20px; 
+            padding: 15px; 
             border-radius: 12px; 
-            margin: 20px auto; 
+            margin: 15px auto; 
             max-width: 400px; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
         }
         .ticker { 
             background: #334155; 
-            padding: 12px; 
+            padding: 10px; 
             border-radius: 6px; 
-            font-size: 14px; 
+            font-size: 13px; 
             color: #f1f5f9; 
-            margin-bottom: 20px; 
+            margin-bottom: 15px; 
             border-left: 4px solid #38bdf8;
+            text-align: left;
         }
-        button { 
-            background: #22c55e; 
+        .btn-sector { 
+            background: #3b82f6; 
             color: white; 
             border: none; 
-            padding: 12px 24px; 
-            font-size: 16px; 
+            padding: 10px 15px; 
+            font-size: 14px; 
             border-radius: 6px; 
             cursor: pointer; 
-            margin-top: 15px; 
+            margin: 8px 0; 
+            width: 100%;
             font-weight: bold;
         }
-        button:active { background: #16a34a; }
-        .stats { font-size: 18px; margin: 10px 0; }
+        .btn-sector:active { background: #2563eb; }
+        .stats { font-size: 18px; margin: 10px 0; font-weight: bold; }
+        .log { font-size: 12px; color: #94a3b8; margin-top: 10px; min-height: 30px; }
     </style>
 </head>
 <body>
 
     <h1>Riches to Reality</h1>
+    <p style="font-size: 12px; color: #94a3b8;">Goal: Reach ₹10,00,00,000 Net Worth</p>
     
     <div class="ticker" id="newsTicker">
-        📰 Live News: Global markets open steady. Waiting for economic shifts...
+        📰 Market Loading...
     </div>
     
     <div class="card">
-        <h3>Player Dashboard</h3>
         <div class="stats">Net Worth: <span id="balance" style="color: #4ade80;">₹10,000</span></div>
-        <p style="font-size: 13px; color: #94a3b8;">Target to Win: ₹10,00,00,000</p>
-        <button onclick="makeInvestment()">Make a Business/Market Move</button>
+        
+        <p style="font-size: 14px; margin-top: 15px;">Choose Where to Invest:</p>
+        
+        <button class="btn-sector" style="background: #8b5cf6;" onclick="invest('content')">🎥 Content Creation (Low Risk)</button>
+        <button class="btn-sector" style="background: #f59e0b;" onclick="invest('ecommerce')">📦 E-Commerce Store (Medium Risk)</button>
+        <button class="btn-sector" style="background: #ef4444;" onclick="invest('crypto')">📈 Crypto / Stocks (High Risk)</button>
+        
+        <div class="log" id="actionLog">Select a sector to start building your wealth!</div>
     </div>
 
     <script>
         let balance = 10000;
-        const newsList = [
-            "📰 Breaking: Fuel prices drop by 10%! Logistics and transport businesses are booming.",
-            "📰 Alert: Crypto market crashes due to strict government regulations worldwide!",
-            "📰 Tech Boom: AI startups are securing massive venture capital funding today.",
-            "📰 Inflation rises: Central bank hikes interest rates, savings under pressure."
-        ];
+        let target = 100000000; // 10 Crore
 
-        function updateNews() {
-            const randomIndex = Math.floor(Math.random() * newsList.length);
-            document.getElementById("newsTicker").innerText = newsList[randomIndex];
+        const subjects = ["Tech Startups", "Crypto Markets", "E-Commerce Logistics", "Content Platforms", "AI Automation Tools"];
+        const actions = ["surged by", "crashed due to sudden regulations", "saw a massive spike of", "faced unexpected losses of", "boomed as demand skyrocketed by"];
+        const percentages = ["15%", "30%", "50%", "5%", "80%"];
+
+        function generateSmartNews() {
+            let sub = subjects[Math.floor(Math.random() * subjects.length)];
+            let act = actions[Math.floor(Math.random() * actions.length)];
+            let perc = percentages[Math.floor(Math.random() * percentages.length)];
+            document.getElementById("newsTicker").innerText = `📰 News: ${sub} ${act} ${perc}!`;
         }
 
-        function makeInvestment() {
-            // Random financial outcome based on simulation logic
-            let profitOrLoss = Math.floor(Math.random() * 8000) - 3000;
+        function invest(type) {
+            let profitOrLoss = 0;
+            let message = "";
+
+            if (type === 'content') {
+                // Stable, steady returns
+                let outcome = Math.random();
+                if (outcome > 0.3) {
+                    profitOrLoss = Math.floor(Math.random() * 5000) + 1000;
+                    message = `🎥 Your viral video brought steady revenue! Earned ₹${profitOrLoss}`;
+                } else {
+                    profitOrLoss = -Math.floor(Math.random() * 1500);
+                    message = `🎥 Algorithm changed. Slight loss of ₹${Math.abs(profitOrLoss)}`;
+                }
+            } 
+            else if (type === 'ecommerce') {
+                // Medium risk/reward
+                let outcome = Math.random();
+                if (outcome > 0.45) {
+                    profitOrLoss = Math.floor(Math.random() * 25000) + 5000;
+                    message = `📦 Your product order went viral! Profit: ₹${profitOrLoss}`;
+                } else {
+                    profitOrLoss = -Math.floor(Math.random() * 10000);
+                    message = `📦 Shipping delays and ad costs caused a loss of ₹${Math.abs(profitOrLoss)}`;
+                }
+            } 
+            else if (type === 'crypto') {
+                // High risk/reward
+                let outcome = Math.random();
+                if (outcome > 0.6) {
+                    profitOrLoss = Math.floor(Math.random() * 150000) + 20000;
+                    message = `🚀 Massive pump! Your asset skyrocketed by ₹${profitOrLoss}`;
+                } else {
+                    profitOrLoss = -Math.floor(Math.random() * 80000);
+                    message = `💥 Market dump! You lost ₹${Math.abs(profitOrLoss)}`;
+                }
+            }
+
             balance += profitOrLoss;
-            
+            if (balance < 0) balance = 0;
+
             document.getElementById("balance").innerText = "₹" + balance.toLocaleString();
-            
-            if(profitOrLoss > 0) {
-                alert("Success! Your decision generated a profit of ₹" + profitOrLoss);
-            } else {
-                alert("Market downturn! You incurred a loss of ₹" + Math.abs(profitOrLoss));
+            document.getElementById("actionLog").innerText = message;
+
+            // Check Win Condition
+            if (balance >= target) {
+                alert("🏆 CONGRATULATIONS! You reached ₹10 Crore and became Ultra-Rich!");
+                document.getElementById("actionLog").innerText = "🏆 YOU WON THE GAME!";
             }
         }
 
-        // Automatically update news ticker every 12 seconds
-        setInterval(updateNews, 12000);
+        // Update news ticker every 10 seconds automatically
+        setInterval(generateSmartNews, 10000);
+        generateSmartNews(); // Initial call
     </script>
 
 </body>
